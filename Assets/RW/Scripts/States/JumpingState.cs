@@ -32,6 +32,7 @@ using UnityEngine;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
+    //umping state is a sub-state of grounded state
     public class JumpingState : State
     {
         private bool grounded;
@@ -50,9 +51,12 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             character.TriggerAnimation(jumpParam);
         }
 
+        //override certain methods from parent class while keeping desired functionality
         public override void Enter()
         {
+            //jump called
             base.Enter();
+            //sound played
             SoundManager.Instance.PlaySound(SoundManager.Instance.jumpSounds);
             grounded = false;
             Jump();
@@ -63,14 +67,18 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.LogicUpdate();
             if (grounded)
             {
+                //land animation called
                 character.TriggerAnimation(landParam);
+                //sound played
                 SoundManager.Instance.PlaySound(SoundManager.Instance.landing);
+                //back to standing
                 stateMachine.ChangeState(character.standing);
             }
         }
 
         public override void PhysicsUpdate()
         {
+            //check if grounded
             base.PhysicsUpdate();
             grounded = character.CheckCollisionOverlap(character.transform.position);
         }

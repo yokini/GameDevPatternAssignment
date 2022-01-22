@@ -37,8 +37,9 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     {
 
 
-
+       
         #region Variables
+        //state machine that handles movement logic for the Character instance.
         public StateMachine movementSM;
         public StandingState standing;
         public DuckingState ducking;
@@ -221,12 +222,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         private void Start()
         {
+            //an instance of State Machine is created and assigned to a variable
             movementSM = new StateMachine();
-
+            //instances of States assigned to variables
             standing = new StandingState(this, movementSM);
             ducking = new DuckingState(this, movementSM);
             jumping = new JumpingState(this, movementSM);
 
+            //first state
             movementSM.Initialize(standing);
         }
 

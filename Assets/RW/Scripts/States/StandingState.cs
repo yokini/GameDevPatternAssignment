@@ -32,6 +32,7 @@ using UnityEngine;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
+    //standing state is a sub-state of grounded state
     public class StandingState : GroundedState
     {
         private bool jump;
@@ -41,17 +42,21 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
         }
 
+        //override certain methods from parent class while keeping desired functionality
         public override void Enter()
         {
             base.Enter();
+            // configure variables from GroundedState
             speed = character.MovementSpeed;
             rotationSpeed = character.RotationSpeed;
+            //standing
             crouch = false;
             jump = false;
         }
 
         public override void HandleInput()
         {
+            //user input stored for crounch and jump
             base.HandleInput();
             crouch = Input.GetButtonDown("Fire3");
             jump = Input.GetButtonDown("Jump");
@@ -59,6 +64,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         public override void LogicUpdate()
         {
+            //check booleans to change states
             base.LogicUpdate();
             if (crouch)
             {

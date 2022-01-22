@@ -32,14 +32,17 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 {
     public class StateMachine
     {
+        //stores the reference to the current active state of the state machine
         public State CurrentState { get; private set; }
 
+        //initializing state machine
         public void Initialize(State startingState)
         {
             CurrentState = startingState;
             startingState.Enter();
         }
 
+        //transition : exits old state to enter new state
         public void ChangeState(State newState)
         {
             CurrentState.Exit();

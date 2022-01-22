@@ -32,6 +32,7 @@ using UnityEngine;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
+    //ducking state is a sub-state of grounded state
     public class DuckingState : GroundedState
     {
         private bool belowCeiling;
@@ -41,31 +42,38 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
         }
 
+        //override certain methods from parent class while keeping desired functionality
         public override void Enter()
         {
+            //crounch enabled,, boolean set to true, values assigned to speeds
             base.Enter();
             character.SetAnimationBool(character.crouchParam, true);
             speed = character.CrouchSpeed;
             rotationSpeed = character.CrouchRotationSpeed;
+            //change collider height
             character.ColliderSize = character.CrouchColliderHeight;
             belowCeiling = false;
         }
 
         public override void Exit()
         {
+            //stop crouching, boolean set to false
             base.Exit();
             character.SetAnimationBool(character.crouchParam, false);
+            //back to normal collider height
             character.ColliderSize = character.NormalColliderHeight;
         }
 
         public override void HandleInput()
         {
+            //user input
             base.HandleInput();
             crouchHeld = Input.GetButton("Fire3");
         }
 
         public override void LogicUpdate()
         {
+            //if not crouching and no collision (juump) state changes to standing
             base.LogicUpdate();
             if (!(crouchHeld || belowCeiling))
             {
@@ -75,6 +83,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         public override void PhysicsUpdate()
         {
+            //check collision over head of character for collider height, via vector3 point.
             base.PhysicsUpdate();
             belowCeiling = character.CheckCollisionOverlap(character.transform.position +
                 Vector3.up * character.NormalColliderHeight);

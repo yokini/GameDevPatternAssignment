@@ -30,8 +30,10 @@
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
+    // abstract class used as a blueprint to derive from, for all the state classes in this project
     public abstract class State
     {
+        //an instance of the Character class and State Machine, respectively
         protected Character character;
         protected StateMachine stateMachine;
 
@@ -41,11 +43,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             this.stateMachine = stateMachine;
         }
 
+        ////displays the name of the current state on the screen UI
+        //enumerator of type UIManager.Alignment, input parameter (Left or Right)
         protected void DisplayOnUI(UIManager.Alignment alignment)
         {
             UIManager.Instance.Display(this, alignment);
         }
 
+        //altogether : the update loop, to be called when state machine transitions between states
         public virtual void Enter()
         {
             DisplayOnUI(UIManager.Alignment.Left);

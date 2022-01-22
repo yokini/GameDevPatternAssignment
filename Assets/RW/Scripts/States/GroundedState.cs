@@ -44,20 +44,24 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
         }
 
+        //override certain methods from parent class while keeping desired functionality
         public override void Enter()
         {
             base.Enter();
+            //reset
             horizontalInput = verticalInput = 0.0f;
         }
 
         public override void Exit()
         {
             base.Exit();
+            //reset
             character.ResetMoveParams();
         }
 
         public override void HandleInput()
         {
+            //WASD input
             base.HandleInput();
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
@@ -65,6 +69,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         public override void PhysicsUpdate()
         {
+            //movement
             base.PhysicsUpdate();
             character.Move(verticalInput * speed, horizontalInput * rotationSpeed);
         }
